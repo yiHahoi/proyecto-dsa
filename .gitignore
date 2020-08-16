@@ -1,7 +1,8 @@
 build/
 results/
+*.csv
 *.docx
+*.exe
 *.png
 *.sublime-project
 *.sublime-workspace
-*.exe
