@@ -66,7 +66,7 @@ class quad_tree
 
 	node* root = nullptr;
 
-	double dist = 360;
+	double dist = 3600;
 
 	double xf[4] = {-0.25, 0.25, -0.25, 0.25};
 	double yf[4] = {0.25, 0.25, -0.25, -0.25};
@@ -98,7 +98,7 @@ class quad_tree
 	void subdivide(node* quad, node* n) {
 		auto q = point_compare(quad, n);
 
-		cout << "reinsert: " << get<1>(n->val()) << endl;
+		// cout << "reinsert: " << get<1>(n->val()) << endl;
 		quad->quadrants[q] = new node(n->point);
 
 		quad = quad->quadrants[q];
@@ -163,6 +163,10 @@ public:
 			if (curr == nullptr) {
 				prev->quadrants[q] = n;
 				prev->quadrants[q]->type = node::black;
+
+				// curr->quadrants[q] = n;
+				// curr->quadrants[q]->type = node::black;
+				
 				// cout << "white: " << get<1>(prev->quadrants[q]->val());
 				// cin.get();
 			}
@@ -186,6 +190,22 @@ public:
 		return true;
 	}
 
+	node* find (key_t key) {
+		point_t* y = new point_t(key, val_t());
+		node* k = new node(y);
+		return find(k, root);
+	}
+
+	node* find (node* k, node* n) {
+		if (n == nullptr || k->coords() == n->coords())
+			return n;
+
+		auto q = point_compare(n, k);
+		cout << n->coords() << endl;
+		return find(k, n->quadrants[q]);
+	}
+
+
 	void print() {
 		inorder_walk(root);
 		cout << endl;
@@ -196,7 +216,8 @@ public:
 			if (n->type == node::black)
 				cout << n->coords() << endl;
 			for (int i = 0; i < 4; ++i)
-				inorder_walk(n->quadrants[i]);
+				if (n->quadrants[i] != nullptr)
+					inorder_walk(n->quadrants[i]);
 		}
 	}
 
