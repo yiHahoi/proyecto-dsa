@@ -66,6 +66,7 @@ PR_QUADTREE::PR_QUADTREE(){
 
 PR_QUADTREE::~PR_QUADTREE(){}
 
+/////////////////////////////////////////////////////////////////////////////////////////
 
 // devuelve un puntero a nodo con el cuadrante mas pequeño que incluye la posicion (x,y)
 NODE* PR_QUADTREE::search_node(double x, double y){
@@ -119,6 +120,7 @@ NODE* PR_QUADTREE::search_node(double x, double y){
 
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
 
 // devuelve un puntero al nodo que contiene la ciudad o NULL si no existe
 NODE* PR_QUADTREE::search_city(double x, double y){
@@ -134,6 +136,7 @@ NODE* PR_QUADTREE::search_city(double x, double y){
 
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
 
 void PR_QUADTREE::insert(double x, double y, CITY* city){
 
@@ -308,48 +311,44 @@ void PR_QUADTREE::insert(double x, double y, CITY* city){
     }
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
 
 void PR_QUADTREE::remove(double x, double y){
 
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
 
 int PR_QUADTREE::total_cities(double x, double y, int radius){
 
     return(0);
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
 
 void PR_QUADTREE::total_population(double x, double y){
 
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
 
 void PR_QUADTREE::total_population_region(double x, double y, int radius){
 
 }
 
-
+/////////////////////////////////////////////////////////////////////////////////////////
 
 int main(int argc, char **argv) {
-
-    /*  Country;City;AccentCity;Region;
-    Population;Latitude;Longitude;geopoint */
 
     // lectura de datos
     ifstream file;
     file.open("worldcitiespop_fixed.csv");
     //file.open("mini.csv");
-    //cout.precision(15);
     string line;
     string word;
-
-    PR_QUADTREE cities;
-
     int ctr = 0;
 
-    // algunas ciudades repetidas en la misma posicion botan el progama xD (ej lumpenai linea 958)
-    // tambien se cae en 10035 y en otras, quizas falte precision, pasar de floats a double D:
+    PR_QUADTREE cities;
 
     getline(file,line);
     while(getline(file,line) && ctr < 3173647){
@@ -358,6 +357,9 @@ int main(int argc, char **argv) {
 
         CITY* city = NULL;
         city = new CITY;
+
+        /*  Country;City;AccentCity;Region;
+        Population;Latitude;Longitude;geopoint */
 
         getline(ss,city->country,';');
         getline(ss,city->city,';');
@@ -395,3 +397,5 @@ int main(int argc, char **argv) {
     return(0);
 
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////
