@@ -22,6 +22,7 @@ class NODE {
     public:
         CITY* data      = NULL;
         char color      = 'w';
+        //NODE* father    = NULL;
         NODE* first     = NULL;
         NODE* second    = NULL;
         NODE* third     = NULL;
@@ -30,6 +31,8 @@ class NODE {
         double y        = 0.0;
         double w        = 0.0;
         double h        = 0.0;
+        //int depth       = 0;
+
 };
 
 
@@ -146,7 +149,9 @@ void PR_QUADTREE::insert(double x, double y, CITY* city){
     // si existe una ciudad en la misma posicion se evita el insert
     if( node->color == 'b' && x == node->data->geoPointX && y == node->data->geoPointY){
 
-        //cout << "x";
+        // si ya existe una ciudad con esta posicion se ignora
+        // la nueva ciudad y se aprovecha de liberar su memoria
+        delete city;
 
     } else {
 
@@ -388,11 +393,12 @@ int main(int argc, char **argv) {
         ctr++;
 
     }
+
+    file.close();
+
     NODE* x = cities.search_node((double)8.3766667,(double)-78.9591667);
     cout << endl << x->data->city << endl;
     //while(1){}
-
-    file.close();
 
     return(0);
 
